@@ -20,6 +20,15 @@ builder.Services.AddDbContext<DataContext>(options =>
 builder.Services.AddScoped<ICardRepository, CardRepository>();//dependency injection
 builder.Services.AddScoped<ICardService, CardService>();
 
+builder.Services.AddScoped<IUserRepository, UserRepository>();//dependency injection
+builder.Services.AddScoped<IUserService, UserService>();
+
+builder.Services.AddScoped<IGameStateRepository, GameStateRepository>();//dependency injection
+builder.Services.AddScoped<IGameStateService, GameStateService>();
+
+builder.Services.AddScoped<IStatisticRepository, StatisticRepository>();//dependency injection
+builder.Services.AddScoped<IStatisticService, StatisticService>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
