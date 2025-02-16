@@ -7,7 +7,8 @@ namespace BlackJack.Repository
     {
         
         Card GetCard(int id);
-  
+       ICollection<Card> GetCards();
+        ICollection<Card> GetCardsByUserId(int id);
     }
     public class CardRepository : ICardRepository
     {
@@ -22,7 +23,14 @@ namespace BlackJack.Repository
         {
             return _dataContext.Cards.Find(id);
         }
-
+        public ICollection<Card> GetCards() 
+        {
+            return _dataContext.Cards.OrderBy(c => c.Id).ToList();
+        }
        
+        public ICollection<Card> GetCardsByUserId(int id)
+        {
+            return _dataContext.Cards.Where(c => c.User.Id == id).ToList();
+        }
     }
 }

@@ -13,8 +13,7 @@ namespace BlackJack.Models
         public  ICollection<Card> Cards { get; set; }
 
         public ICollection<Statistic> Statistics { get; set; }
-        public int? GameStateId { get; set; }
-       
+    
         public GameState? GameState { get; set; }
 
       

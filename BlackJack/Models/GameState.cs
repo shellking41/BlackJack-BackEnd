@@ -7,13 +7,13 @@ namespace BlackJack.Models
         public int Id { get; set; }
         public bool isGameOver { get; set; }
 
-        public string State { get; set; }
+        public string Status { get; set; }
 
         public double CurrentBet { get; set; }
 
        
         public int? UserId { get; set; }
-        [ForeignKey("UserId")]
+        
         public User? User { get; set; }
 
     }

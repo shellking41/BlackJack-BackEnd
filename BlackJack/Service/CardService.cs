@@ -6,6 +6,8 @@ namespace BlackJack.Service
     public interface ICardService
     {
         Card GetCard(int id);
+       ICollection<Card> GetCards();
+        ICollection<Card> GetCardsByUserId(int id);
     }
 
     public class CardService : ICardService
@@ -21,6 +23,14 @@ namespace BlackJack.Service
         public Card GetCard(int id)
         {
             return _repository.GetCard(id);
+        }
+        public ICollection<Card> GetCards() 
+        {
+            return _repository.GetCards();
+        }
+        public ICollection<Card> GetCardsByUserId(int id)
+        {
+            return _repository.GetCardsByUserId(id);
         }
     }
 }

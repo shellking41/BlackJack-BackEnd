@@ -4,6 +4,7 @@ using BlackJack.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BlackJack.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20250216123150_blackjack3")]
+    partial class blackjack3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -74,9 +77,7 @@ namespace BlackJack.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId")
-                        .IsUnique()
-                        .HasFilter("[UserId] IS NOT NULL");
+                    b.HasIndex("UserId");
 
                     b.ToTable("GameStates");
                 });
@@ -128,6 +129,9 @@ namespace BlackJack.Migrations
                     b.Property<double>("CurrentMoney")
                         .HasColumnType("float");
 
+                    b.Property<int?>("GameStateId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Password")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -137,6 +141,8 @@ namespace BlackJack.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("GameStateId");
 
                     b.ToTable("Users");
                 });
@@ -155,8 +161,8 @@ namespace BlackJack.Migrations
             modelBuilder.Entity("BlackJack.Models.GameState", b =>
                 {
                     b.HasOne("BlackJack.Models.User", "User")
-                        .WithOne("GameState")
-                        .HasForeignKey("BlackJack.Models.GameState", "UserId");
+                        .WithMany()
+                        .HasForeignKey("UserId");
 
                     b.Navigation("User");
                 });
@@ -174,9 +180,16 @@ namespace BlackJack.Migrations
 
             modelBuilder.Entity("BlackJack.Models.User", b =>
                 {
-                    b.Navigation("Cards");
+                    b.HasOne("BlackJack.Models.GameState", "GameState")
+                        .WithMany()
+                        .HasForeignKey("GameStateId");
 
                     b.Navigation("GameState");
+                });
+
+            modelBuilder.Entity("BlackJack.Models.User", b =>
+                {
+                    b.Navigation("Cards");
 
                     b.Navigation("Statistics");
                 });
